@@ -199,11 +199,6 @@ class UI {
 
 class Chart{
     static storeLocalStorage(){
-        // checks if the data is on the localStorage and if true, stops this function
-        if(localStorage.getItem("countriesData") !== null){
-            return;
-        }
-
         const xhr = new XMLHttpRequest();
 
         xhr.open("GET", "countries.json", true);
