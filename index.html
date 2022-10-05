@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>World Countries Data using AJAX</title>
+
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+    <main class="main">
+      <div class="header">
+        <h1 class="title">world countries data</h1>
+
+        <h2 class="sub-title">
+          Currently, we have <span id="countries-count"></span> countries
+        </h2>
+
+        <p class="message"></p>
+      </div>
+
+      <div class="search-box">
+        <form class="form">
+          <input
+            type="search"
+            class="search-field"
+            placeholder="Search Country by name and capital..." />
+        </form>
+
+        <div class="nav">
+          <button class="btn" id="name">
+            name
+            <span class="arrow">
+              <svg
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M8 7l4-4m0 0l4 4m-4-4v18"></path>
+              </svg>
+            </span>
+          </button>
+
+          <button class="btn" id="capital">
+            capital
+            <span class="arrow">
+              <svg
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M8 7l4-4m0 0l4 4m-4-4v18"></path>
+              </svg>
+            </span>
+          </button>
+
+          <button class="btn" id="populations">
+            population
+            <span class="arrow">
+              <svg
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M8 7l4-4m0 0l4 4m-4-4v18"></path>
+              </svg>
+            </span>
+          </button>
+
+          <a href="#chart"
+            ><div class="chart-btn">
+              <svg
+                fill="none"
+                stroke="var(--yellow)"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+              </svg>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="countries-data"></div>
+
+      <div class="chart-navigation">
+        <div class="chart-navigation-btns">
+          <button class="btn btn2 population">Population</button>
+          <button class="btn btn2 language">Languages</button>
+        </div>
+
+        <p class="chart-paragraph"></p>
+      </div>
+
+      <div id="chart"></div>
+    </main>
+
+    <script src="main.js"></script>
+  </body>
+</html>
