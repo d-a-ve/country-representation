@@ -66,8 +66,6 @@ class UI {
         Chart.storeLocalStorage();
         const countriesData = JSON.parse(localStorage.getItem("countriesData"));
 
-        console.log(countriesData);
-        
         let res = func(countriesData, elem);
 
         container.innerHTML = res;
