@@ -467,6 +467,7 @@ class Chart{
 
 // when the document loads
 document.addEventListener("DOMContentLoaded", () => {
+    Chart.storeLocalStorage();
     UI.showCountriesData(UI.insertCountries);
     UI.searching(UI.findCountryName, Chart.searchedCountries);
     Chart.tenMostPopulatedCountries();
