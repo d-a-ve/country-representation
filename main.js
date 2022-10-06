@@ -65,6 +65,8 @@ class UI {
     static showCountriesData = (func, elem) => {
         const countriesData = JSON.parse(localStorage.getItem("countriesData"));
 
+        console.log(countriesData);
+        
         let res = func(countriesData, elem);
 
         container.innerHTML = res;
