@@ -63,8 +63,6 @@ class UI {
     }
 
     static showCountriesData = (func, elem) => {
-        // send an ajax request and store it to local storage
-        Chart.storeLocalStorage();
         const countriesData = JSON.parse(localStorage.getItem("countriesData"));
 
         let res = func(countriesData, elem);
@@ -189,9 +187,9 @@ class UI {
 
     // displaying countries based on the user's input
     static searching(elem,func){
-        searchField.addEventListener("input", () => {
-            UI.showCountriesData(elem, searchField.value);  
-            func(searchField.value);
+        searchField.addEventListener("input", (e) => {
+            UI.showCountriesData(elem, e.target.value);  
+            func(e.target.value);
             let country = document.querySelectorAll(".country-self");
             message.innerHTML = `${country.length} satisfied the search condition`;
         })
@@ -211,21 +209,28 @@ class UI {
 
 class Chart{
     static storeLocalStorage(){
-        // checks if the data is on the localStorage and if true, stops this function
-        if(localStorage.getItem("countriesData") !== null){
-            return;
-        }
-        const xhr = new XMLHttpRequest();
+        fetch("countries.json")
+          .then((response) => {
+            if(response.ok){
+                return response.json();
+            } else {
+                throw new Error("Network response error");
+            }
+          })
+          .then(data => {
+            // add data to the local Storage, remove the loader, add data and chart to the html file
+            localStorage.setItem("countriesData",JSON.stringify(data));
+            Chart.hideloader();
+            Chart.tenMostPopulatedCountries([...data]);
+            container.innerHTML = UI.insertCountries(data);
+            countriesCount.innerHTML = data.length;
+          })
+          .catch((error) => console.error("fetch error:", error));
+    }
 
-        xhr.open("GET", "countries.json", true);
-
-        xhr.onload = function (){
-            let res = JSON.parse(this.responseText);
-
-            localStorage.setItem("countriesData", JSON.stringify(res));
-        }
-
-        xhr.send();
+    static hideloader(){
+        document.getElementById("header").style.display = "flex";
+        document.getElementById("loading").style.display = "none";
     }
 
     static insertChartData(i, arr, total){ 
@@ -240,13 +245,11 @@ class Chart{
         return res
     }
 
-    static tenMostPopulatedCountries (){
-        let countriesData = JSON.parse(localStorage.getItem("countriesData"));
-
-        countriesData.sort((a,b) => b.population - a.population);
+    static tenMostPopulatedCountries(data){
+        data.sort((a,b) => b.population - a.population);
 
         // find the total population in the array
-        let totalPopulation = countriesData.reduce((total, currentValue) => total + currentValue.population, 0);
+        let totalPopulation = data.reduce((total, currentValue) => total + currentValue.population, 0);
 
         let res = `
                     <div class="country-data">
@@ -258,7 +261,7 @@ class Chart{
 
         // add the content to the html
         for(let i = 0; i < 10; i++){
-            res += Chart.insertChartData(i, countriesData, totalPopulation);
+            res += Chart.insertChartData(i, data, totalPopulation);
         }
 
         chartText.innerHTML = "10 Most Populated Countries";
@@ -270,7 +273,7 @@ class Chart{
     static searchedCountries(elem){
         // if the elem is empty, stop the function
         if(elem == ""){
-            Chart.tenMostPopulatedCountries();
+            Chart.tenMostPopulatedCountries(JSON.parse(localStorage.getItem("countriesData")));
             return // this tells the browser to stop the function here if true
         }
 
@@ -302,13 +305,13 @@ class Chart{
     }
 
     static searchedCapitalChart(elem){
+        let countriesData = JSON.parse(localStorage.getItem("countriesData"));
+
         // if the elem is empty, stop the function
         if(elem == ""){
-            Chart.tenMostPopulatedCountries();
+            Chart.tenMostPopulatedCountries(countriesData);
             return // this tells the browser to stop the function here if true
         }
-
-        let countriesData = JSON.parse(localStorage.getItem("countriesData"));
 
         countriesData.sort((a,b) => b.population - a.population);
 
@@ -463,16 +466,14 @@ class Chart{
 }
 
 // EVENTS
-
+Chart.storeLocalStorage();
 
 // when the document loads
 document.addEventListener("DOMContentLoaded", () => {
-    UI.showCountriesData(UI.insertCountries);
     UI.searching(UI.findCountryName, Chart.searchedCountries);
-    Chart.tenMostPopulatedCountries();
 });
 
-// show back to top btn when window goes down 100px
+// show back to top btn when window goes down 
 window.addEventListener("scroll", UI.scrollDown);
 
 
