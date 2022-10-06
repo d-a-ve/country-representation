@@ -63,6 +63,7 @@ class UI {
     }
 
     static showCountriesData = (func, elem) => {
+        Chart.storeLocalStorage();
         const countriesData = JSON.parse(localStorage.getItem("countriesData"));
 
         let res = func(countriesData, elem);
@@ -203,7 +204,6 @@ class Chart{
         if(localStorage.getItem("countriesData") !== null){
             return;
         }
-
         const xhr = new XMLHttpRequest();
 
         xhr.open("GET", "countries.json", true);
@@ -456,7 +456,6 @@ class Chart{
 
 // when the document loads
 document.addEventListener("DOMContentLoaded", () => {
-    Chart.storeLocalStorage();
     UI.showCountriesData(UI.insertCountries);
     UI.searching(UI.findCountryName, Chart.searchedCountries);
     Chart.tenMostPopulatedCountries();
