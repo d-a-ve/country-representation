@@ -27,13 +27,29 @@ body{
     background:var(--grey);
 }
 
+#loading{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 430px;
+    width: 100%;
+    height: 400px;
+    padding: 2rem 0;
+    margin: 0 auto;
+}
+
+#loading p{
+    font-size: 2rem;
+    color: var(--yellow);
+}
+
 .main{
     width: 100%;
     padding: 20px 0;
-    display: flex;
     -ms-flex-direction: column;
     flex-direction: column;
     align-items: center;
+    display: none;
 }
 
 .header{
@@ -292,6 +308,10 @@ body{
 }
 
 @media screen and (max-width: 468px){
+    #loading p{
+        font-size: 1.6rem;
+    }
+
     .title{
         line-height: 2.7rem;
         margin-bottom: 1rem;
