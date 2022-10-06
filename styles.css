@@ -5,10 +5,15 @@
     --yellow: rgb(242, 169, 59);
     --grey: rgb(240, 238, 239);
     --white: rgb(248, 248, 248);
+    --hover-yellow: rgb(245, 152, 13);
 
     font-family: "Poppins", sans-serif;
 
     font-size: 62.5%;
+}
+
+html{
+    scroll-behavior: smooth;
 }
 
 *{
@@ -107,6 +112,10 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.btn:hover{
+    background: var(--hover-yellow);
 }
 
 .chart-btn{
@@ -228,6 +237,25 @@ body{
     height: 35px;
     background: var(--yellow);
 }
+
+.to-top-btn{
+    position: fixed;
+    right: 50px;
+    bottom: 6px;
+    width: 30px !important;
+    height: 30px;
+    border-radius: 4px;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.4s;
+}
+
+.to-top-btn.active{
+    pointer-events: auto;
+    opacity: 1;
+    bottom: 50px;
+}
+
 @media screen and (max-width: 1024px){
     .countries-data{
         grid-template-columns: repeat(3, 1fr);
@@ -319,8 +347,8 @@ body{
     .btn2{
         margin-bottom: 1rem
     }
-}
 
-@media screen and (max-width: 468px){
-
+    .to-top-btn{
+        right: 20px;
+    }
 }

@@ -63,6 +63,7 @@ class UI {
     }
 
     static showCountriesData = (func, elem) => {
+        // send an ajax request and store it to local storage
         Chart.storeLocalStorage();
         const countriesData = JSON.parse(localStorage.getItem("countriesData"));
 
@@ -194,6 +195,16 @@ class UI {
             let country = document.querySelectorAll(".country-self");
             message.innerHTML = `${country.length} satisfied the search condition`;
         })
+    }
+    
+    // showing back to top arrow
+    static scrollDown(){
+        // back to top btn
+        const toTop= document.querySelector(".to-top-btn");
+        if(window.scrollY > 100){
+            return toTop.classList.add("active"); // stops the function here if true else continues
+        }
+        toTop.classList.remove("active");
     }
 }
 
@@ -461,6 +472,9 @@ document.addEventListener("DOMContentLoaded", () => {
     Chart.tenMostPopulatedCountries();
 });
 
+// show back to top btn when window goes down 100px
+window.addEventListener("scroll", UI.scrollDown);
+
 
 // click events
 nameNavBtn.addEventListener("click", () => {    
@@ -534,4 +548,4 @@ chartPopulationNavBtn.addEventListener("click", () => {
         Chart.searchedCountries(searchField.value);
         UI.searching(UI.findCountryName, Chart.searchedCountries);
     }
-})
+});
